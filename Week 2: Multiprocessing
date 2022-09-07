@@ -1,0 +1,100 @@
+## Week 2 Tues (9/6/22)
+
+-Use command front/command line not idle (IDE)
+
+Dangers of multithreading
+
+- Deadlock (program cannot move forward —race conditions — when 1 thread locks a resource needed by a 2nd thread and the 2nd thread locks a resourve held by the first
+- Race Conditions (very hard to debug)
+
+“Lock” keeps data from being altered by other threads — therefore it will not be changed outside of the thread thread that is currently running — make sure you use “lock.release()” to avoid dead locking
+
+## allows cntrl+c — import to use one server
+
+“import signal”
+
+“signal.signal(signal,SIGINT, signal.SIG_DFL)”
+
+“thread.join()” — wouldn’t be multithreading instead just threading — but does avoid data race
+
+## When to use thread.join
+
+Ex) You want to read 2 files. Run them in threads and then join them
+
+Ex) If you’re making web requests while reading files.
+
+## How to successfully use Multithreading
+
+- Avoid unnecessary locks ( it is easy to excessively lock your shared data which will only slow down your program. Only lock the shared data. Allowing additional processing to occur inside of a lock reduces the effectiveness of a thread.)
+- Limit use of shared data (increases chance of deadlock and data race)
+
+# Multiprocessing
+
+- Code is executed in separate memory space
+- Code is executed in the same way you execute a program
+- Takes advantage of multiple CPUs
+- Easy to stop/kill a process
+- Truly parallel processing
+- You can have multiple processes that execute multiple threads
+- 2 server windows executing at same time
+- Multiprocessing is better than multithreading because if you have heavy computational work to do, then they don’t rely on each other to run.
+
+Task manager for mac??
+
+Monte Carlo Simulation = futuristic/guess resul — predicts set of outcomes
+
+| Multiprocessing | Multithreading |
+| --- | --- |
+| - Occurs on multiple CPUs | - Single CPU that uses context switching |
+| - Separate memory (harder to share) |  |
+| - More overhead. More memory required |  |
+| - Slower to create |  |
+| - Easy to kill processes |  |
+| - Zombie processes can occur |  |
+| - Slightly easier to debug |  |
+| - Useful for computational intesive tasks (data processing and simulations) |  |
+|  |  |
+
+## Sharing Data - Interprocess Compunications (IPC)
+
+- Shared Memory
+    
+    An area of storage on the computer that can be used to share data between processes 
+    
+    A process must know the address of the shared memory space
+    
+    A programmer myst be mindful of the data in shared memory to not corrypt or overwrite meaningful data
+    
+    Fastest form of interprocess communcication
+    
+    Uses buffers
+    
+- Pipes
+    
+    Undirectional communications from one process to another
+    
+    One process wrotes to the pipe while the recieving process waits to read from the pipe
+    
+    Limited data capacity
+    
+    If a process writes to the buffer faster than the data can be consumed, the writing program will be blocked
+    
+- Sockets
+    
+    Bidirectional communication between processes on the same machine or different machines
+    
+    Sent in the form of packets
+    
+    (User has limited control over how their data is broken up into packets — Could change MTY size *Maximum Transmission Unit)
+    
+    Packets are sent via a Network Protocol (TCP, UDP, etc…)
+    
+    Process communication can be one to one or one to many
+    
+
+Shared memory
+
+- Producer and consumer process
+- start consumer process inside producer process “proc = Process(targer=consumer, args=(slm.name,lock,))
+- shared memory buffer makes an array “data = np.ndarray(arr.shape, dtype-arr.dtype, buffer=slm.buf”)
+- data[:] - arr[:] everything in the array is written to data so then the buffer is full. “:” in python = everything in array (1dimension so 1 colon, but 2d = data[::]
